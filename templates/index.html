@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f5ef" />
+    <meta
+      name="description"
+      content="Saad Hassan's portfolio: Python, Flask, and dependable delivery systems."
+    />
+    <title>Saad Hassan | Software &amp; DevOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top" aria-label="Saad Hassan, home"
+        >SH<span>.</span></a
+      >
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span class="menu-toggle-label">Menu</span>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="#work">Selected work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <img
+          class="hero-image"
+          src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2200&q=90"
+          alt="Intricate circuitry on a computer board"
+          fetchpriority="high"
+        />
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <p class="eyebrow hero-eyebrow">
+            <span class="status-dot"></span> SOFTWARE ENGINEER / DEVOPS
+          </p>
+          <h1 id="hero-title">Saad<br /><span>Hassan</span></h1>
+          <div class="hero-bottom">
+            <p>Building useful software and the systems that help it ship.</p>
+            <a
+              class="circle-link"
+              href="#work"
+              aria-label="Explore selected work"
+              ><span aria-hidden="true"></span
+            ></a>
+          </div>
+        </div>
+        <p class="hero-index" aria-hidden="true">01 &mdash; 03</p>
+      </section>
+
+      <section
+        class="intro section-wrap"
+        id="about"
+        aria-labelledby="intro-title"
+      >
+        <p class="eyebrow section-label reveal">
+          A LITTLE ABOUT ME <span>01</span>
+        </p>
+        <div class="intro-copy reveal">
+          <h2 id="intro-title">
+            I like software that works <em>well</em> and works
+            <em>reliably.</em>
+          </h2>
+          <div class="intro-aside">
+            <p>
+              I&rsquo;m Saad, a Python and DevOps enthusiast interested in
+              thoughtful backend development, clean automation, and the details
+              that make a service dependable.
+            </p>
+            <a class="text-link" href="#contact"
+              >A little more about what I do
+              <span aria-hidden="true">+</span></a
+            >
+          </div>
+        </div>
+        <div class="skill-strip reveal" aria-label="Areas of focus">
+          <span>Python</span><span>Flask</span><span>Docker</span
+          ><span>CI / CD</span><span>Linux</span>
+        </div>
+      </section>
+
+      <section class="work-section" id="work" aria-labelledby="work-title">
+        <div class="section-wrap">
+          <div class="work-heading reveal">
+            <div>
+              <p class="eyebrow section-label">
+                THINGS I&rsquo;VE BEEN BUILDING <span>02</span>
+              </p>
+              <h2 id="work-title">Selected <em>work</em></h2>
+            </div>
+            <p class="work-note">
+              A few hands-on explorations across application development and
+              delivery.
+            </p>
+          </div>
+
+          <div class="filter-row" role="group" aria-label="Filter projects">
+            <button
+              class="filter-button is-active"
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              All work
+            </button>
+            <button
+              class="filter-button"
+              type="button"
+              data-filter="DevOps"
+              aria-pressed="false"
+            >
+              DevOps
+            </button>
+            <button
+              class="filter-button"
+              type="button"
+              data-filter="Backend"
+              aria-pressed="false"
+            >
+              Backend
+            </button>
+            <button
+              class="filter-button"
+              type="button"
+              data-filter="Cloud"
+              aria-pressed="false"
+            >
+              Cloud
+            </button>
+            <span class="filter-count" aria-live="polite">03 projects</span>
+          </div>
+
+          <div class="project-grid">
+            {% for project in projects %}
+            <button
+              class="project-card reveal"
+              type="button"
+              data-category="{{ project.category }}"
+              data-title="{{ project.title }}"
+              data-eyebrow="{{ project.eyebrow }}"
+              data-description="{{ project.description }}"
+              data-details="{{ project.details }}"
+              data-stack="{{ project.stack | join('|') }}"
+              data-image="{{ project.image }}"
+              data-image-alt="{{ project.image_alt }}"
+              aria-label="View project: {{ project.title }}"
+            >
+              <span class="project-image-wrap"
+                ><img
+                  src="{{ project.image }}"
+                  alt="{{ project.image_alt }}"
+                  loading="lazy"
+              /></span>
+              <span class="project-meta"
+                ><span>{{ project.eyebrow }}</span
+                ><span>{{ project.category }}</span></span
+              >
+              <span class="project-title"
+                >{{ project.title }}<i aria-hidden="true"></i
+              ></span>
+              <span class="project-description">{{ project.description }}</span>
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="contact-section"
+        id="contact"
+        aria-labelledby="contact-title"
+      >
+        <div class="section-wrap contact-inner reveal">
+          <p class="eyebrow section-label">WHAT&rsquo;S NEXT <span>03</span></p>
+          <h2 id="contact-title">
+            Let&rsquo;s make the<br /><em>next thing</em> dependable.
+          </h2>
+          <div class="contact-bottom">
+            <p>
+              Good ideas deserve a thoughtful build and a smooth way to
+              production.
+            </p>
+            {% if contact_email %}
+            <a class="contact-link" href="mailto:{{ contact_email }}"
+              >Say hello <span aria-hidden="true">&rarr;</span></a
+            >
+            {% else %}
+            <a class="contact-link" href="#work"
+              >Explore the work <span aria-hidden="true">&rarr;</span></a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="wordmark footer-mark" href="#top" aria-label="Back to top"
+        >SH<span>.</span></a
+      >
+      <p>Designed and built by Saad Hassan</p>
+      <a href="#top">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </footer>
+
+    <dialog class="project-dialog" aria-labelledby="dialog-title">
+      <button
+        class="dialog-close"
+        type="button"
+        aria-label="Close project details"
+      >
+        Close <span aria-hidden="true">&times;</span>
+      </button>
+      <img class="dialog-image" alt="" />
+      <div class="dialog-content">
+        <p class="eyebrow dialog-eyebrow"></p>
+        <h2 id="dialog-title"></h2>
+        <p class="dialog-description"></p>
+        <p class="dialog-details"></p>
+        <div class="dialog-stack" aria-label="Technology stack"></div>
+      </div>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=2).read()"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    networks:
+      - ci-network
+
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    group_add:
+      - "${DOCKER_GID:-999}"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - sonarqube
+    networks:
+      - ci-network
+
+  sonarqube:
+    image: sonarqube:lts-community
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - ci-network
+
+volumes:
+  jenkins_home:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+
+networks:
+  ci-network:
+    name: devops-ci-cd-network
+    driver: bridge

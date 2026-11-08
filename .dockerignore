@@ -1,0 +1,9 @@
+.git
+.venv
+.ci-venv
+__pycache__
+*.py[cod]
+tests
+README.md
+Dockerfile.jenkins
+docker-compose.yml
